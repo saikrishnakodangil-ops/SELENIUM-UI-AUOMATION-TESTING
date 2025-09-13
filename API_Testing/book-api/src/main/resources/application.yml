@@ -1,0 +1,73 @@
+spring:
+  profiles.active: dev
+
+endpoints:
+  dump:
+    enabled: false
+  env:
+    enabled: false
+  metrics:
+    enabled: false
+  shutdown:
+    enabled: false
+
+environment:
+  hostName: 127.0.0.1
+
+github:
+    url: https://api.github.com/users/whatever
+    client_id: d02686d709dda31d1a63
+
+---
+
+spring:
+  profiles: dev
+
+server:
+  port: 9000
+
+management:
+  context-path: /manage
+  security:
+    enabled: false
+
+security:
+  basic:
+    enabled: false
+
+error:
+  whitelabel:
+    enabled: false
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: INFO
+      hibernate: INFO
+
+---
+
+spring:
+  profiles: qa
+
+logging:
+  level:
+    root: INFO
+
+---
+spring:
+  profiles: uat
+
+logging:
+  level:
+    root: WARN
+
+---
+spring:
+  profiles: prod
+
+logging:
+  level:
+    root: INFO

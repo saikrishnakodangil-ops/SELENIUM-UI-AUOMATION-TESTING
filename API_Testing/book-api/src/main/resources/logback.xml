@@ -1,0 +1,32 @@
+<configuration>
+    <!-- always a good activate OnConsoleStatusListener -->
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+    <variable name="LOG_DIR" value="${log.dir:-logs}"/>
+    <variable name="ENV" value="${spring.profiles.default:-dev}"/>
+    <variable name="MAX_HISTORY" value="365" />
+    <variable name="DEFAULT_PATTERN" value="[%date{HH:mm:ss.SSS}] [%p] %logger.%M: %msg%n"/>
+    <variable name="ARCHIVED_SUFFIX" value="%d{yyyyMMdd}" />
+
+    <!-- STDOUT -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${DEFAULT_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- DEFAULT output file  -->
+    <appender name="MAIN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/book-api-${ENV}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>archived/book-api-${ARCHIVED_SUFFIX}.log.gz</fileNamePattern>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${DEFAULT_PATTERN}</pattern>
+        </encoder>
+    </appender>
+ 
+
+  <include resource="${ENV}.logback.xml"/>
+</configuration>
